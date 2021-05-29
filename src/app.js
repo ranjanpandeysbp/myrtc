@@ -6,6 +6,8 @@ let stream = require( './ws/stream' );
 let path = require( 'path' );
 let favicon = require( 'serve-favicon' );
 
+const port = process.env.PORT || 80;
+
 app.use( favicon( path.join( __dirname, 'favicon.ico' ) ) );
 app.use( '/assets', express.static( path.join( __dirname, 'assets' ) ) );
 
@@ -16,4 +18,7 @@ app.get( '/', ( req, res ) => {
 
 io.of( '/stream' ).on( 'connection', stream );
 
-server.listen( 80 );
+app.listen(port, err => {
+    if(err) throw err;
+    console.log("%c Server running", "color: green");
+});
